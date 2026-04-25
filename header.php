@@ -34,7 +34,7 @@
                         <a href="<?php echo site_url('/campuses'); ?>">Campuses</a>
                     </li>
 
-                    <li <?php if (is_page('blog')) echo 'class="current-menu-item"'; ?>>
+                    <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"'; ?>>
                         <a href="<?php echo site_url('/blog'); ?>">Blog</a>
                     </li>
                 </ul>
