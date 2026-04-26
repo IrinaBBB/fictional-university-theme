@@ -16,18 +16,34 @@
         <div class="full-width-split__one">
             <div class="full-width-split__inner">
                 <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
-
+                <?php $today = date('Ymd') ?>
                 <?php $homePageEvents = new WP_Query(array(
-                    'posts_per_page' => 2,
-                    'post_type' => 'event'
+                    'posts_per_page' => -1,
+                    'post_type' => 'event',
+                    'meta_key' => 'event_date',
+                    'orderby' => 'meta_value_num',
+                    'order' => 'asc',
+                    'meta_query' => array(
+                        array(
+                            'key' => 'event_date',
+                            'compare' => '>=',
+                            'value' => $today,
+                            'type' => 'numeric'
+                        )
+                    )
                 )); ?>
 
                 <?php while ($homePageEvents->have_posts()): ?>
                     <?php $homePageEvents->the_post(); ?>
                     <div class="event-summary">
-                        <a class="event-summary__date t-center" href="<?php ?>">
-                            <span class="event-summary__month">Mar</span>
-                            <span class="event-summary__day">25</span>
+                        <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
+                            <?php $eventDate = new DateTime(get_field('event_date')); ?>
+                            <span class="event-summary__month">
+                                <?php echo $eventDate->format('M'); ?>
+                            </span>
+                            <span class="event-summary__day">
+                                <?php echo $eventDate->format('d'); ?>
+                            </span>
                         </a>
                         <div class="event-summary__content">
                             <h5 class="event-summary__title headline headline--tiny"><a
@@ -44,7 +60,8 @@
                         </div>
                     </div>
                 <?php endwhile; ?>
-                <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event'); ?>" class="btn btn--blue">View All Events</a></p>
+                <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event'); ?>"
+                                                 class="btn btn--blue">View All Events</a></p>
             </div>
         </div>
         <div class="full-width-split__two">
