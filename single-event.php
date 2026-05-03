@@ -21,10 +21,27 @@ while (have_posts()) {
                     <i class="fa fa-home" aria-hidden="true"></i>
                     Events home
                 </a> <span
-                    class="metabox__main"><?php the_title(); ?></span>
+                        class="metabox__main"><?php the_title(); ?></span>
             </p>
         </div>
         <div class="generic-content"><?php the_content(); ?></div>
+        <hr class="section-break">
+        <?php $relatedPrograms = get_field('related_programs') ?>
+
+        <?php if ($relatedPrograms): ?>
+            <h2 class="headline headline--medium ">Related programs</h2>
+            <!--        --><?php //print_r($relatedPrograms); ?>
+            <ul class="link-list min-list">
+
+                <?php foreach ($relatedPrograms as $program): ?>
+                    <li>
+                        <a href="<?php echo get_the_permalink($program); ?>">
+                            <?php echo get_the_title($program); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 <?php }
 
