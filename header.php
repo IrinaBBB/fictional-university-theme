@@ -9,7 +9,7 @@
 <header class="site-header">
     <div class="container">
         <h1 class="school-logo-text float-left">
-            <a href="<?php site_url(); ?>"><strong>Fictional</strong> University</a>
+            <a href="<?php site_url('/'); ?>"><strong>Fictional</strong> University</a>
         </h1>
         <span class="js-search-trigger site-header__search-trigger"><i class="fa fa-search"
                                                                        aria-hidden="true"></i></span>
@@ -21,7 +21,8 @@
                         <a href="<?php echo site_url('/about-us') ?>">About Us</a>
                     </li>
                     <li><a href="#">Programs</a></li>
-                    <li><a href="#">Events</a></li>
+                    <li <?php if (get_post_type() == 'event') echo 'class="current-menu-item"' ?>><a
+                                href="<?php echo get_post_type_archive_link('event'); ?>">Events</a></li>
                     <li><a href="#">Campuses</a></li>
                     <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"' ?>><a
                                 href="<?php echo site_url('/blog') ?>">Blog</a>
