@@ -58,6 +58,58 @@ while (have_posts()) :
             <?php the_content(); ?>
         </div>
 
+        <?php
+        $relatedProfessors = new WP_Query(array(
+            'posts_per_page' => -1,
+            'post_type' => 'professor',
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'meta_query' => array(
+                array(
+                    'key' => 'related_programs',
+                    'compare' => 'LIKE',
+                    'value' => '"' . get_the_ID() . '"',
+                ),
+            ),
+        ));
+        ?>
+
+        <?php if ($relatedProfessors->have_posts()) : ?>
+
+            <hr class="section-break">
+
+            <h2 class="headline headline--medium">
+                <?php the_title(); ?> Professors
+            </h2>
+
+            <ul class="professor-cards">
+
+                <?php
+                while ($relatedProfessors->have_posts()) :
+                    $relatedProfessors->the_post();
+                    ?>
+
+                    <li class="professor-card__list-item">
+                        <a class="professor-card" href="<?php the_permalink(); ?>">
+                            <?php the_post_thumbnail('professorLandscape', array(
+                                'class' => 'professor-card__image',
+                                'alt' => get_the_title()
+                            )); ?>
+
+                            <span class="professor-card__name">
+                                <?php the_title(); ?>
+                            </span>
+                        </a>
+                    </li>
+
+                <?php endwhile; ?>
+
+            </ul>
+
+        <?php endif; ?>
+
+        <?php wp_reset_postdata(); ?>
+
         <?php if ($relatedEvents->have_posts()) : ?>
 
             <hr class="section-break">
