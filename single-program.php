@@ -63,6 +63,30 @@ while (have_posts()) :
         ));
         ?>
 
+        <?php
+        $relatedCampuses = get_field('related_campuses');
+        ?>
+
+        <?php if ($relatedCampuses) : ?>
+
+            <hr class="section-break">
+
+            <h2 class="headline headline--medium">
+                Available at these campuses
+            </h2>
+
+            <ul class="link-list min-list">
+                <?php foreach ($relatedCampuses as $campus) : ?>
+                    <li>
+                        <a href="<?php echo esc_url(get_permalink($campus)); ?>">
+                            <?php echo esc_html(get_the_title($campus)); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+        <?php endif; ?>
+
         <?php if ($relatedProfessors->have_posts()) : ?>
 
             <hr class="section-break">
